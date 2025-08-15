@@ -1,6 +1,7 @@
 import { Article } from "@/types/models";
 import { GoogleGenAI } from "@google/genai";
 
+// TODO: add feature to add and remove interests
 const SAMPLE_INTERESTS = [
   'Software Engineer',
   'web development',

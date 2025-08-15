@@ -1,6 +1,7 @@
 import { GetArticlesResponse } from '@/types/api';
 import axios from 'axios';
 
+// TODO: add feature to add and remove sources
 const EXAMPLE_SOURCES = [
   'hacker-news',
   'recode',
