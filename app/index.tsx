@@ -74,13 +74,31 @@ export default function Index() {
   }
   return (
     <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+      style={styles.mainContainer}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Text style={styles.titleText}>Hello, here are your list of articles</Text>
+      <View style={styles.articleContainer}>
+        {articles && articles.map((articleData, index) => {
+          return (
+            <ArticleItem article={articleData} key={index} />
+          )
+        })}
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  mainContainer: {
+    padding: 40,
+  },
+  articleContainer: {
+    marginTop: 40,
+    width: '100%',
+    rowGap: 10,
+  },
+  titleText: {
+    fontWeight: 'bold',
+    fontSize: 22,
+  }
+})
