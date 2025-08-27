@@ -1,9 +1,7 @@
 import ArticleItem from "@/components/ArticleItem";
-import getArticles from "@/services/getArticles";
-import googleAIService from "@/services/googleAIService";
 import { Article } from "@/types/models";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 
 // TODO: remove test data and use real data
 const TEST_ARTICLES: Article[] = [
@@ -53,52 +51,58 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   useEffect(() => {
     const getCurateArticles = async () => {
-        const fetchedArticles = await getArticles();
-        const curatedArticles = await googleAIService(fetchedArticles);
-        setArticles(curatedArticles);
-        console.log('curated articles:\n' + JSON.stringify(curatedArticles, null, 2))
+      try {
+        // const fetchedArticles = await getArticles();
+        // const curatedArticles = await googleAIService(fetchedArticles);
+        // setArticles(curatedArticles);
+        // TODO: uncomment function and use real data instead
+        setArticles(TEST_ARTICLES)
+
+        // console.log('curated articles:\n' + JSON.stringify(curatedArticles, null, 2))
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false)
+      }
     }
-    try {
-      // getCurateArticles();
-      // TODO: uncomment function and use real data instead
-      setArticles(TEST_ARTICLES)
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false)
-    }
+      getCurateArticles();
   }, [])
 
   if (isLoading) {
-    return <Text>Getting your articles...</Text>
+    return (
+      <View style={styles.mainContainer}>
+        <Text>Getting your articles...</Text>
+      </View>
+    );
   }
   return (
     <View
       style={styles.mainContainer}
     >
-      <Text style={styles.titleText}>Hello, here are your list of articles</Text>
-      <View style={styles.articleContainer}>
+      <Text style={styles.titleText}>Your Curated News</Text>
+      <ScrollView style={styles.articleContainer}>
         {articles && articles.map((articleData, index) => {
           return (
             <ArticleItem article={articleData} key={index} />
           )
         })}
-      </View>
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   mainContainer: {
-    padding: 40,
+    paddingVertical: 50,
+    backgroundColor: '#eeeeee',
   },
   articleContainer: {
-    marginTop: 40,
     width: '100%',
-    rowGap: 10,
   },
   titleText: {
+    marginHorizontal: 26,
+    marginBottom: 14,
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: 26,
   }
 })
