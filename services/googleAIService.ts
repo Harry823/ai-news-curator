@@ -13,7 +13,9 @@ const googleAIService = async (articles: Article[]) => {
   const ai = new GoogleGenAI({ apiKey: process.env.EXPO_PUBLIC_GEMINI_API_KEY });
   const examplePrompt = `using this JSON formatted list of articles:
     ${JSON.stringify(articles)}, give me the 3 articles that best fit this list of interests:
-    ${SAMPLE_INTERESTS}. Output needs to retain the original JSON list object format.`;
+    ${SAMPLE_INTERESTS}.
+    Prioritize articles that fit the interests starting at the beginning of the array. 
+    Output needs to retain the original JSON list object format.`;
   /**
    * logic for counting tokens.
    * uncomment when needed to check prompt tokens used.
