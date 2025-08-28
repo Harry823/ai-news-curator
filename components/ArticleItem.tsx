@@ -1,5 +1,5 @@
 import { Article } from "@/types/models";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { Image, Linking, StyleSheet, Text, TouchableOpacity } from "react-native";
 
 type ArticleItemProps = {
@@ -7,13 +7,22 @@ type ArticleItemProps = {
 }
 
 const ArticleItem: FC<ArticleItemProps> = ({ article }) => {
+  const [shouldImageRender, setShouldImageRender] = useState(true);
+
+  const handleImageError = () => {
+    setShouldImageRender(true);
+  }
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => Linking.openURL(article.url)}
     >
-      {article.urlToImage && (
-        <Image source={{uri: article.urlToImage}} style={styles.imageContainer} />
+      {shouldImageRender && (
+        <Image
+          source={{uri: article.urlToImage}}
+          style={styles.imageContainer}
+          onError={handleImageError}
+        />
       )}
       <Text style={styles.titleText}>{article.title.substring(0, 120)}</Text>
       <Text>{article.description}</Text>

@@ -1,4 +1,6 @@
 import ArticleItem from "@/components/ArticleItem";
+import getArticles from "@/services/getArticles";
+import googleAIService from "@/services/googleAIService";
 import { Article } from "@/types/models";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
@@ -52,13 +54,14 @@ export default function Index() {
   useEffect(() => {
     const getCurateArticles = async () => {
       try {
-        // const fetchedArticles = await getArticles();
-        // const curatedArticles = await googleAIService(fetchedArticles);
-        // setArticles(curatedArticles);
+        console.log('curating articles');
+        const fetchedArticles = await getArticles();
+        const curatedArticles = await googleAIService(fetchedArticles);
+        setArticles(curatedArticles);
         // TODO: uncomment function and use real data instead
-        setArticles(TEST_ARTICLES)
+        // setArticles(TEST_ARTICLES)
 
-        // console.log('curated articles:\n' + JSON.stringify(curatedArticles, null, 2))
+        console.log('curated articles:\n' + JSON.stringify(curatedArticles, null, 2))
       } catch (error) {
         console.log(error);
       } finally {
@@ -95,6 +98,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     paddingVertical: 50,
     backgroundColor: '#eeeeee',
+    overflow: 'scroll',
   },
   articleContainer: {
     width: '100%',
