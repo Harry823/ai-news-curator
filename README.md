@@ -1,6 +1,6 @@
 # Welcome to your Expo app 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app). This is a mobile app that fetches top articles using NewsAPI, and curates the 3 articles that best fits the user's interests through Google Gemini's AI. This is still a work in progress, currently building the UI for the app. Future plans include having the user customize their interests for a more robust experience.
 
 ## Get started
 
