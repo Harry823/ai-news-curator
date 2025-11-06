@@ -11,10 +11,12 @@ const SAMPLE_INTERESTS = [
 
 const googleAIService = async (articles: Article[]) => {
   const ai = new GoogleGenAI({ apiKey: process.env.EXPO_PUBLIC_GEMINI_API_KEY });
-  const examplePrompt = `using this JSON formatted list of articles:
-    ${JSON.stringify(articles)}, give me the 3 articles that best fit this list of interests:
-    ${SAMPLE_INTERESTS}.
-    Prioritize articles that fit the interests starting at the beginning of the array. 
+  const examplePrompt = `
+    You are a curator for news articles.
+    You are given a list of interests for the the user:${SAMPLE_INTERESTS}.
+    using this JSON formatted list of articles:
+    ${JSON.stringify(articles)}, give me the 3 articles that best fit their interests.
+    Prioritize the latest articles, and rank the interests based on the start of the array.
     Output needs to retain the original JSON list object format.`;
   /**
    * logic for counting tokens.

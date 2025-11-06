@@ -16,22 +16,27 @@ const getArticles = async () => {
     throw new Error("NewsAPI API Key is undefined. Please check env configurations.")
   }
 
-  const articlesResponse: GetArticlesResponse = await axios.get(process.env.EXPO_PUBLIC_NEWSAPI_URL, {
-    params: {
-      apiKey: process.env.EXPO_PUBLIC_NEWSAPI_API_KEY,
-      language: 'en',
-      sources: EXAMPLE_SOURCES.join(),
-      pageSize: 37
-    }
-  })
+  try {
+    const articlesResponse: GetArticlesResponse = await axios.get(process.env.EXPO_PUBLIC_NEWSAPI_URL, {
+      params: {
+        apiKey: process.env.EXPO_PUBLIC_NEWSAPI_API_KEY,
+        language: 'en',
+        sources: EXAMPLE_SOURCES.join(),
+        pageSize: 37
+      }
+    })
 
-  if (articlesResponse.data.status === 'ok') {
-    return articlesResponse.data.articles;
-  } else {
-    throw new Error(
-      `getArticles error: could not get articles. API response:\n,
-      ${JSON.stringify(articlesResponse, null, 2)}`
-    )
+    if (articlesResponse.data.status === 'ok') {
+      return articlesResponse.data.articles;
+    } else {
+      throw new Error(
+        `getArticles error: could not get articles. API response:\n,
+        ${JSON.stringify(articlesResponse, null, 2)}`
+      )
+    }
+  } catch (error) {
+    console.log('getArticles error', error.response);
+    throw error;
   }
 }
 
